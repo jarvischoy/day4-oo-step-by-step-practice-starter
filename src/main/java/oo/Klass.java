@@ -6,6 +6,12 @@ public class Klass {
     private int number;
     private int leaderId;
 
+    public Person getAttachedPerson() {
+        return attachedPerson;
+    }
+
+    private Person attachedPerson;
+
     public Klass(int number) {
         this.number = number;
     }
@@ -16,11 +22,20 @@ public class Klass {
             return;
         }
 
+        if (attachedPerson != null) {
+            attachedPerson.notifyAssignLeader(student, this);
+        }
+
+
         this.leaderId = student.hashCode();
     }
 
     public boolean isLeader(Student student) {
         return student.hashCode() == this.leaderId;
+    }
+
+    public void attach(Person person) {
+        attachedPerson = person;
     }
 
     @Override

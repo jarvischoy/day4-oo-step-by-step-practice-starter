@@ -4,6 +4,11 @@ import java.util.Objects;
 
 public class Person {
     private int id;
+
+    public String getName() {
+        return name;
+    }
+
     private String name;
     private int age;
 
@@ -15,6 +20,9 @@ public class Person {
 
     public String introduce() {
         return String.format("My name is %s. I am %d years old.", name, age);
+    }
+
+    public void notifyAssignLeader(Person person, Klass klass) {
     }
 
     @Override

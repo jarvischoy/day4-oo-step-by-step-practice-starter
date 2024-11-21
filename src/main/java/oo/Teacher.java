@@ -27,13 +27,23 @@ public class Teacher extends Person {
     }
 
     @Override
+    public void notifyAssignLeader(Person person, Klass klass) {
+        System.out.printf("I am %s, teacher of Class %d. I know %s become Leader.%n", klass.getAttachedPerson().getName(), klass.getNumber(), person.getName());
+    }
+
+    @Override
     public String introduce() {
         String teachingClasses = this.klasses.stream()
                 .map(klass -> klass.getNumber() + "")
                 .collect(Collectors.joining(", "));
 
-        return super.introduce()
-                .concat(" I am a teacher. ")
-                .concat(String.format("I teach Class %s.", teachingClasses));
+        String introduction = super.introduce()
+                .concat(" I am a teacher.");
+
+        if (teachingClasses.isEmpty()) {
+            return introduction;
+        }
+
+        return introduction.concat(String.format(" I teach Class %s.", teachingClasses));
     }
 }
