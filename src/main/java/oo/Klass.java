@@ -1,19 +1,42 @@
 package oo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Klass {
     private int number;
     private int leaderId;
+    private List<Student> students;
+    private List<Teacher> teachers;
+    private Person attachedPerson;
+
+    public Klass(int number) {
+        this.number = number;
+        this.students = new ArrayList<>();
+        this.teachers = new ArrayList<>();
+    }
 
     public Person getAttachedPerson() {
         return attachedPerson;
     }
 
-    private Person attachedPerson;
+    public void addStudent(Student student) {
+        this.students.add(student);
+        student.join(this);
+    }
 
-    public Klass(int number) {
-        this.number = number;
+    public void addTeacher(Teacher teacher) {
+        this.teachers.add(teacher);
+        teacher.assignTo(this);
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
     public void assignLeader(Student student) {
@@ -25,7 +48,6 @@ public class Klass {
         if (attachedPerson != null) {
             attachedPerson.notifyAssignLeader(student, this);
         }
-
 
         this.leaderId = student.hashCode();
     }
