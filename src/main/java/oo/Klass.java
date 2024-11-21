@@ -3,41 +3,45 @@ package oo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Klass {
     private int number;
     private int leaderId;
-    private List<Student> students;
-    private List<Teacher> teachers;
-    private Person attachedPerson;
+    private List<Person> people;
+    private List<Observer> observers;
 
     public Klass(int number) {
         this.number = number;
-        this.students = new ArrayList<>();
-        this.teachers = new ArrayList<>();
+        this.people = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
-    public Person getAttachedPerson() {
-        return attachedPerson;
-    }
-
-    public void addStudent(Student student) {
-        this.students.add(student);
-        student.join(this);
-    }
-
-    public void addTeacher(Teacher teacher) {
-        this.teachers.add(teacher);
-        teacher.assignTo(this);
+    public void addPeople(Person person) {
+        this.people.add(person);
+        if (person instanceof Student) {
+            ((Student) person).join(this);
+            this.observers.add((Student) person);
+        } else if (person instanceof Teacher) {
+            ((Teacher) person).assignTo(this);
+            this.observers.add((Teacher) person);
+        }
     }
 
     public List<Student> getStudents() {
-        return students;
+        return people.stream()
+                .filter(person -> person instanceof Student)
+                .map(person -> (Student) person)
+                .collect(Collectors.toList());
     }
 
     public List<Teacher> getTeachers() {
-        return teachers;
+        return people.stream()
+                .filter(person -> person instanceof Teacher)
+                .map(person -> (Teacher) person)
+                .collect(Collectors.toList());
     }
+
 
     public void assignLeader(Student student) {
         if (!student.isIn(this)) {
@@ -45,19 +49,26 @@ public class Klass {
             return;
         }
 
-        if (attachedPerson != null) {
-            attachedPerson.notifyAssignLeader(student, this);
-        }
-
         this.leaderId = student.hashCode();
+        notifyObservers(student);
     }
 
     public boolean isLeader(Student student) {
         return student.hashCode() == this.leaderId;
     }
 
-    public void attach(Person person) {
-        attachedPerson = person;
+    public void attach(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    private void notifyObservers(Student leader) {
+        for (Observer observer : observers) {
+            observer.update(leader, this);
+        }
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override
@@ -71,9 +82,5 @@ public class Klass {
     @Override
     public int hashCode() {
         return Objects.hashCode(number);
-    }
-
-    public int getNumber() {
-        return number;
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Teacher extends Person {
+public class Teacher extends Person implements Observer {
 
     private List<Klass> klasses;
 
@@ -27,8 +27,10 @@ public class Teacher extends Person {
     }
 
     @Override
-    public void notifyAssignLeader(Person person, Klass klass) {
-        System.out.printf("I am %s, teacher of Class %d. I know %s become Leader.%n", klass.getAttachedPerson().getName(), klass.getNumber(), person.getName());
+    public void update(Student leader, Klass klass) {
+        if (this.belongsTo(klass)) {
+            System.out.printf("I am %s, teacher of Class %d. I know %s become Leader.%n", this.getName(), klass.getNumber(), leader.getName());
+        }
     }
 
     @Override

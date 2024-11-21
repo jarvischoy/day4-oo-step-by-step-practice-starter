@@ -2,7 +2,7 @@ package oo;
 
 import java.util.Objects;
 
-public class Student extends Person {
+public class Student extends Person implements Observer {
     private Klass klass;
 
     public Student(int id, String name, int age) {
@@ -18,8 +18,10 @@ public class Student extends Person {
     }
 
     @Override
-    public void notifyAssignLeader(Person person, Klass klass) {
-        System.out.printf("I am %s, student of Class %d. I know %s become Leader.%n", klass.getAttachedPerson().getName(), klass.getNumber(), person.getName());
+    public void update(Student leader, Klass klass) {
+        if (this.klass.equals(klass)) {
+            System.out.printf("I am %s, student of Class %d. I know %s become Leader.%n", this.getName(), klass.getNumber(), leader.getName());
+        }
     }
 
     @Override

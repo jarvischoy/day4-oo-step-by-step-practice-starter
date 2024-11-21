@@ -45,10 +45,10 @@ public class SchoolTest {
         Student student1 = new Student(1, "Alice", 15);
         Student student2 = new Student(2, "Bob", 16);
 
-        klass1.addTeacher(teacher1);
-        klass1.addStudent(student1);
-        klass2.addTeacher(teacher2);
-        klass2.addStudent(student2);
+        klass1.addPeople(teacher1);
+        klass1.addPeople(student1);
+        klass2.addPeople(teacher2);
+        klass2.addPeople(student2);
 
         school.addKlass(klass1);
         school.addKlass(klass2);
