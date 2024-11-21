@@ -22,9 +22,6 @@ public class Person {
         return String.format("My name is %s. I am %d years old.", name, age);
     }
 
-    public void notifyAssignLeader(Person person, Klass klass) {
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
