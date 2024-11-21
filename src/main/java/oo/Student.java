@@ -17,6 +17,14 @@ public class Student extends Person {
 
     @Override
     public String introduce() {
-        return super.introduce().concat(String.format(" I am a student. I am in class %d.", klass.getNumber()));
+        String classSpeech = String.format(
+                this.klass.isLeader(this) ?
+                        "I am the leader of class %d."
+                        : "I am in class %d.",
+                this.klass.getNumber());
+
+        return super.introduce()
+                .concat(" I am a student. ")
+                .concat(classSpeech);
     }
 }

@@ -10,15 +10,15 @@ public class Teacher extends Person {
 
     public Teacher(int id, String name, int age) {
         super(id, name, age);
-        klasses = new ArrayList<>();
+        this.klasses = new ArrayList<>();
     }
 
     public void assignTo(Klass klass) {
-        klasses.add(klass);
+        this.klasses.add(klass);
     }
 
     public boolean belongsTo(Klass klass) {
-        return klasses.contains(klass);
+        return this.klasses.contains(klass);
     }
 
     public boolean isTeaching(Student student) {
@@ -28,11 +28,12 @@ public class Teacher extends Person {
 
     @Override
     public String introduce() {
-        String teachingClasses = klasses.stream()
+        String teachingClasses = this.klasses.stream()
                 .map(klass -> klass.getNumber() + "")
                 .collect(Collectors.joining(", "));
 
         return super.introduce()
-                .concat(String.format(" I am a teacher. I teach Class %s.", teachingClasses));
+                .concat(" I am a teacher. ")
+                .concat(String.format("I teach Class %s.", teachingClasses));
     }
 }
